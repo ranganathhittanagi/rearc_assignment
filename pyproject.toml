@@ -1,0 +1,21 @@
+[project]
+name = "rearc-assignment"
+version = "0.1.0"
+description = "Databricks medallion pipeline for BLS productivity and population data."
+requires-python = ">=3.10"
+dependencies = [
+    "requests",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pyspark",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

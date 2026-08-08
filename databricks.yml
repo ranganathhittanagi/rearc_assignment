@@ -1,0 +1,34 @@
+bundle:
+  name: rearc_assignment
+
+include:
+  - resources/jobs/*.yml
+  - resources/pipelines/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: <DATABRICKS_HOST>
+    variables:
+      catalog: workspace
+      volume_path: /Volumes/workspace/default/rearc_raw
+      contact_email: ranganath.hittanagi@gmail.com
+
+  prod:
+    mode: production
+    workspace:
+      host: <DATABRICKS_HOST>
+    variables:
+      catalog: workspace
+      volume_path: /Volumes/workspace/default/rearc_raw
+      contact_email: ranganath.hittanagi@gmail.com
+
+variables:
+  catalog:
+    description: Unity Catalog name for bronze/silver/gold schemas.
+  volume_path:
+    description: Unity Catalog Volume path for raw landed files.
+  contact_email:
+    description: Contact email used in the BLS User-Agent header.

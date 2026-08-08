@@ -1,0 +1,19 @@
+resources:
+  jobs:
+    rearc_ingestion_job:
+      name: rearc_ingestion_job
+      tasks:
+        - task_key: ingest_sources
+          spark_python_task:
+            python_file: ../../src/rearc_assignment/ingestion/job.py
+            parameters:
+              - "--volume_path=${var.volume_path}"
+              - "--contact_email=${var.contact_email}"
+          new_cluster:
+            spark_version: 15.4.x-scala2.12
+            node_type_id: Standard_DS3_v2
+            num_workers: 0
+      schedule:
+        quartz_cron_expression: "0 0 6 * * ?"
+        timezone_id: UTC
+        pause_status: PAUSED

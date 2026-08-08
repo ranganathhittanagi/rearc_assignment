@@ -1,0 +1,17 @@
+resources:
+  pipelines:
+    rearc_medallion_pipeline:
+      name: rearc_medallion_pipeline
+      catalog: ${var.catalog}
+      target: bronze
+      configuration:
+        volume_path: ${var.volume_path}
+      libraries:
+        - file:
+            path: ../../src/rearc_assignment/pipelines/bronze.py
+        - file:
+            path: ../../src/rearc_assignment/pipelines/silver.py
+        - file:
+            path: ../../src/rearc_assignment/pipelines/gold.py
+      continuous: false
+      photon: true

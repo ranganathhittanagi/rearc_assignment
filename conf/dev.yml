@@ -1,0 +1,5 @@
+catalog: workspace
+bronze_schema: bronze
+silver_schema: silver
+gold_schema: gold
+volume_path: /Volumes/workspace/default/rearc_raw

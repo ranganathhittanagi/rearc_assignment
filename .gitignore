@@ -1,0 +1,10 @@
+data_vol/
+__pycache__/
+*.pyc
+.databricks/
+.env
+.venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
