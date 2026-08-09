@@ -2,6 +2,7 @@ resources:
   pipelines:
     rearc_medallion_pipeline:
       name: rearc_medallion_pipeline
+      serverless: true
       catalog: ${var.catalog}
       target: bronze
       configuration:
@@ -14,4 +15,3 @@ resources:
         - file:
             path: ../../src/rearc_pipeline/pipelines/gold.py
       continuous: false
-      photon: true

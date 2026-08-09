@@ -3,10 +3,18 @@
 
 import json
 import os
+import sys
+import inspect
 from urllib.parse import urljoin
 import logging
 
-from rearc_assignment.ingestion.utils import (
+# Allow importing the local package when Databricks runs this file directly.
+# Serverless runs the file via exec(), so __file__ is not defined; use the
+# code object's filename instead.
+_THIS_FILE = inspect.currentframe().f_code.co_filename
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(_THIS_FILE), "..", "..")))
+
+from rearc_pipeline.ingestion.utils import (
     LinkParser,
     get_website_response,
     get_file_names,
@@ -14,13 +22,18 @@ from rearc_assignment.ingestion.utils import (
 )
 
 
+import argparse
+
 # Parameters (overridable when run as a Databricks job).
+def _get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--volume_path", default="/Volumes/workspace/default/rearc_raw")  # A Unity Catalog Volume path.
+    parser.add_argument("--contact_email", default="ranganath.hittanagi@gmail.com")
+    return parser.parse_args()
 
-dbutils.widgets.text("volume_path", "/Volumes/workspace/default/rearc_raw") # A Unity Catalog Volume path. Files written here persist like normal files.
-dbutils.widgets.text("contact_email", "ranganath.hittanagi@gmail.com")
-
-VOLUME_PATH = dbutils.widgets.get("volume_path")
-CONTACT_EMAIL = dbutils.widgets.get("contact_email")
+args = _get_args()
+VOLUME_PATH = args.volume_path
+CONTACT_EMAIL = args.contact_email
 
 SOURCES = [
     {
