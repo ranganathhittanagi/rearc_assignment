@@ -10,7 +10,7 @@ targets:
     mode: development
     default: true
     workspace:
-      host: <DATABRICKS_HOST>
+      host: https://dbc-641a368b-df72.cloud.databricks.com/
     variables:
       catalog: workspace
       volume_path: /Volumes/workspace/default/rearc_raw
@@ -19,7 +19,7 @@ targets:
   prod:
     mode: production
     workspace:
-      host: <DATABRICKS_HOST>
+      host: https://dbc-641a368b-df72.cloud.databricks.com/
     variables:
       catalog: workspace
       volume_path: /Volumes/workspace/default/rearc_raw

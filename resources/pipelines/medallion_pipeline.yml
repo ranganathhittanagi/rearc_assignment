@@ -8,10 +8,10 @@ resources:
         volume_path: ${var.volume_path}
       libraries:
         - file:
-            path: ../../src/rearc_assignment/pipelines/bronze.py
+            path: ../../src/rearc_pipeline/pipelines/bronze.py
         - file:
-            path: ../../src/rearc_assignment/pipelines/silver.py
+            path: ../../src/rearc_pipeline/pipelines/silver.py
         - file:
-            path: ../../src/rearc_assignment/pipelines/gold.py
+            path: ../../src/rearc_pipeline/pipelines/gold.py
       continuous: false
       photon: true
