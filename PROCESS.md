@@ -4,12 +4,32 @@
 
 ```mermaid
 flowchart LR
-    A[BLS Website & DataUSA API] --> B[Ingestion Job]
-    B --> C[UC Volume /Volumes/workspace/default/rearc_raw]
-    C --> D[Bronze Tables Auto Loader]
-    D --> E[Silver Tables cleaned & typed]
-    E --> F[Gold Tables analytics]
-    F --> G[Dashboard / Genie Space]
+    classDef source fill:#d0f0f8,stroke:#76a5af,stroke-width:2px;
+    classDef store fill:#e6e6ff,stroke:#6c5ce7,stroke-width:2px;
+    classDef bronze fill:#ffe0b2,stroke:#e67e22,stroke-width:2px;
+    classDef silver fill:#e8e8e8,stroke:#7f8c8d,stroke-width:2px;
+    classDef gold fill:#fff9c4,stroke:#f1c40f,stroke-width:2px;
+    classDef consumer fill:#d5f5e3,stroke:#27ae60,stroke-width:2px;
+    classDef pipeline fill:#e6e6ff,stroke:#6c5ce7,stroke-width:2px;
+
+    WS[/Website Data Sources/] -->|ingest| Volumes[Databricks Volumes]
+    API[/API Data Sources/] -->|ingest| Volumes
+    Volumes -->|raw data| Bronze[Bronze Layer]
+    Bronze -->|cleanse| Silver[Silver Layer]
+    Silver -->|aggregate| Gold[Gold Layer]
+    Gold -->|dashboards| Dashboards((AI/BI Dashboards))
+    Gold -->|explore| Genie((Genie Space))
+    Pipelines[/Declarative Pipelines/] -->|orchestrates| Bronze
+    Pipelines -->|orchestrates| Silver
+    Pipelines -->|orchestrates| Gold
+
+    class WS,API source
+    class Volumes store
+    class Bronze bronze
+    class Silver silver
+    class Gold gold
+    class Dashboards,Genie consumer
+    class Pipelines pipeline
 ```
 
 - **Bronze/Silver/Gold separation** keeps raw history (Bronze), reusable cleaned/typed assets (Silver), and stakeholder-ready answers (Gold). If a downstream calculation is wrong, I can fix the Gold logic and re-run from Silver without re-landing data.
