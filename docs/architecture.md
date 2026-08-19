@@ -1,5 +1,7 @@
 # Architecture
 
+![Data Architecture on Databricks](../screenshots/databricks_architectural_diagram.png)
+
 ## Sources
 
 1. **BLS productivity data** (`https://download.bls.gov/pub/time.series/pr/`):

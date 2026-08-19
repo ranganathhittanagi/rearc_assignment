@@ -2,35 +2,9 @@
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    classDef source fill:#d0f0f8,stroke:#76a5af,stroke-width:2px;
-    classDef store fill:#e6e6ff,stroke:#6c5ce7,stroke-width:2px;
-    classDef bronze fill:#ffe0b2,stroke:#e67e22,stroke-width:2px;
-    classDef silver fill:#e8e8e8,stroke:#7f8c8d,stroke-width:2px;
-    classDef gold fill:#fff9c4,stroke:#f1c40f,stroke-width:2px;
-    classDef consumer fill:#d5f5e3,stroke:#27ae60,stroke-width:2px;
-    classDef pipeline fill:#e6e6ff,stroke:#6c5ce7,stroke-width:2px;
+![Data Architecture on Databricks](screenshots/databricks_architectural_diagram.png)
 
-    WS[/Website Data Sources/] -->|ingest| Volumes[Databricks Volumes]
-    API[/API Data Sources/] -->|ingest| Volumes
-    Volumes -->|raw data| Bronze[Bronze Layer]
-    Bronze -->|cleanse| Silver[Silver Layer]
-    Silver -->|aggregate| Gold[Gold Layer]
-    Gold -->|dashboards| Dashboards((AI/BI Dashboards))
-    Gold -->|explore| Genie((Genie Space))
-    Pipelines[/Declarative Pipelines/] -->|orchestrates| Bronze
-    Pipelines -->|orchestrates| Silver
-    Pipelines -->|orchestrates| Gold
 
-    class WS,API source
-    class Volumes store
-    class Bronze bronze
-    class Silver silver
-    class Gold gold
-    class Dashboards,Genie consumer
-    class Pipelines pipeline
-```
 
 - **Bronze/Silver/Gold separation** keeps raw history (Bronze), reusable cleaned/typed assets (Silver), and stakeholder-ready answers (Gold). If a downstream calculation is wrong, I can fix the Gold logic and re-run from Silver without re-landing data.
 - **Bronze uses Auto Loader (`cloudFiles`)** so the pipeline is incremental by default. New BLS files or population refreshes are picked up automatically.
